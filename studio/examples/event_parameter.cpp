@@ -7,6 +7,9 @@ This example demonstrates how to control event playback using game parameters.
 #include "fmod_studio.hpp"
 #include "fmod.hpp"
 #include "common.h"
+#include <string>
+#include <cstring>
+#include <iostream>
 
 
 
@@ -86,7 +89,8 @@ int FMOD_Main()
     FMOD_STUDIO_PARAMETER_DESCRIPTION paramEvent = paramDesertProgreso;
     FMOD_STUDIO_PARAMETER_ID paramID = desertID; 
     float paramValue = progresoParameterValue;
-    char* eventSelected = "Desert";
+    std::string desertstr = "Desert";
+    const char* eventSelected = desertstr.c_str();
 
     do
     {
@@ -117,7 +121,8 @@ int FMOD_Main()
         if (Common_BtnPress(BTN_LEFT)) // DESERT
         {
             ERRCHECK(eventInst->stop(FMOD_STUDIO_STOP_IMMEDIATE));
-            eventSelected = "Desert";
+            std::string str = "Desert";
+            eventSelected = str.c_str();
             eventInst = eventInstDesert;
             paramEvent = paramDesertProgreso;
             paramID = desertID;
@@ -127,7 +132,8 @@ int FMOD_Main()
         if (Common_BtnPress(BTN_RIGHT)) // JUNGLE
         {
             ERRCHECK(eventInst->stop(FMOD_STUDIO_STOP_IMMEDIATE));
-            eventSelected = "Jungle";
+            std::string str = "Jungle";
+            eventSelected = str.c_str();
             eventInst = eventInstJungle;
             paramEvent = paramJungleHora;
             paramID = horaID;
@@ -137,7 +143,8 @@ int FMOD_Main()
         if (Common_BtnPress(BTN_UP)) // ELEVATOR
         {
             ERRCHECK(eventInst->stop(FMOD_STUDIO_STOP_IMMEDIATE));
-            eventSelected = "Elevator";
+            std::string str = "Elevator";
+            eventSelected = str.c_str();
             eventInst = eventInstElevator;
             paramEvent = paramElevatorNivel;
             paramID = nivelID;
