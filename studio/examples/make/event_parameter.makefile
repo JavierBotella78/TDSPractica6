@@ -1,5 +1,8 @@
 NAME = event_parameter
 
+CPU = x86_64
+CONFIG = Debug
+
 ifndef CPU
     $(error Specify CPU=[x86|x86_64|arm|armhf])
 endif
