@@ -7,7 +7,6 @@ This example demonstrates how to control event playback using game parameters.
 #include "fmod_studio.hpp"
 #include "fmod.hpp"
 #include "common.h"
-#include <string>
 
 
 
@@ -87,7 +86,7 @@ int FMOD_Main()
     FMOD_STUDIO_PARAMETER_DESCRIPTION paramEvent = paramDesertProgreso;
     FMOD_STUDIO_PARAMETER_ID paramID = desertID; 
     float paramValue = progresoParameterValue;
-    std::string eventSelected = "Desert";
+    char* eventSelected = "Desert";
 
     do
     {
