@@ -29,9 +29,6 @@ int FMOD_Main()
     FMOD::Studio::Bank* stringsBank = NULL;
     ERRCHECK( system->loadBankFile(Common_MediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank) );
 
-    FMOD::Studio::Bank* sfxBank = NULL;
-    ERRCHECK( system->loadBankFile(Common_MediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank) );
-
     // -----------------    DESERT
 
     FMOD::Studio::EventDescription* eventDescDesert = NULL;
