@@ -7,6 +7,7 @@ This example demonstrates how to control event playback using game parameters.
 #include "fmod_studio.hpp"
 #include "fmod.hpp"
 #include "common.h"
+#include <string>
 
 
 
@@ -86,6 +87,7 @@ int FMOD_Main()
     FMOD_STUDIO_PARAMETER_DESCRIPTION paramEvent = paramDesertProgreso;
     FMOD_STUDIO_PARAMETER_ID paramID = desertID; 
     float paramValue = progresoParameterValue;
+    std::string eventSelected = "Desert";
 
     do
     {
@@ -96,13 +98,13 @@ int FMOD_Main()
             ERRCHECK( eventInst->start() );
         }
 
-        if (Common_BtnPress(BTN_ACTION1))
+        if (Common_BtnDown(BTN_ACTION1))
         {
             paramValue = Common_Max(paramEvent.minimum, paramValue - 0.1f);
             ERRCHECK( eventInst->setParameterByID(paramID, paramValue) );
         }
 
-        if (Common_BtnPress(BTN_ACTION2))
+        if (Common_BtnDown(BTN_ACTION2))
         {
             paramValue = Common_Min(paramValue + 0.1f, paramEvent.maximum);
             ERRCHECK( eventInst->setParameterByID(paramID, paramValue) );
@@ -115,6 +117,8 @@ int FMOD_Main()
 
         if (Common_BtnPress(BTN_LEFT)) // DESERT
         {
+            ERRCHECK(eventInst->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+            eventSelected = "Desert";
             eventInst = eventInstDesert;
             paramEvent = paramDesertProgreso;
             paramID = desertID;
@@ -123,6 +127,8 @@ int FMOD_Main()
 
         if (Common_BtnPress(BTN_RIGHT)) // JUNGLE
         {
+            ERRCHECK(eventInst->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+            eventSelected = "Jungle";
             eventInst = eventInstJungle;
             paramEvent = paramJungleHora;
             paramID = horaID;
@@ -131,6 +137,8 @@ int FMOD_Main()
 
         if (Common_BtnPress(BTN_UP)) // ELEVATOR
         {
+            ERRCHECK(eventInst->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+            eventSelected = "Elevator";
             eventInst = eventInstElevator;
             paramEvent = paramElevatorNivel;
             paramID = nivelID;
@@ -148,6 +156,7 @@ int FMOD_Main()
         Common_Draw("Copyright (c) Firelight Technologies 2012-2021.");
         Common_Draw("==================================================");
         Common_Draw("");
+        Common_Draw("SELECTED: %s", eventSelected);
         Common_Draw("Parameter = (user: %1.1f, final: %1.1f)", userValue, finalValue);
         Common_Draw("");
         Common_Draw("Parameter:");
