@@ -98,14 +98,19 @@ int FMOD_Main()
 
         if (Common_BtnPress(BTN_ACTION1))
         {
-            paramValue = Common_Max(paramEvent.minimum, paramValue - 1.0f);
+            paramValue = Common_Max(paramEvent.minimum, paramValue - 0.1f);
             ERRCHECK( eventInst->setParameterByID(paramID, paramValue) );
         }
 
         if (Common_BtnPress(BTN_ACTION2))
         {
-            paramValue = Common_Min(paramValue + 1.0f, paramEvent.maximum);
+            paramValue = Common_Min(paramValue + 0.1f, paramEvent.maximum);
             ERRCHECK( eventInst->setParameterByID(paramID, paramValue) );
+        }
+
+        if (Common_BtnPress(BTN_ACTION3))
+        {
+            ERRCHECK(eventInst->stop(FMOD_STUDIO_STOP_IMMEDIATE));
         }
 
         if (Common_BtnPress(BTN_LEFT)) // DESERT
@@ -149,6 +154,7 @@ int FMOD_Main()
         Common_Draw("Press %s to play event", Common_BtnStr(BTN_MORE));
         Common_Draw("Press %s to decrease value", Common_BtnStr(BTN_ACTION1));
         Common_Draw("Press %s to increase value", Common_BtnStr(BTN_ACTION2));
+        Common_Draw("Press %s to pause", Common_BtnStr(BTN_ACTION3));
         Common_Draw("");
         Common_Draw("Event:");
         Common_Draw("Press %s to select Desert Event", Common_BtnStr(BTN_LEFT));
