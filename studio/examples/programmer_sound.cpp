@@ -13,6 +13,11 @@ Studio::EventInstance::setCallback
 #include "common.h"
 #include <iostream>
 #include <cstring>
+#include <stdlib.h>
+
+#include <chrono>
+#include <thread>
+
 
 struct ProgrammerSoundContext
 {
@@ -73,29 +78,36 @@ int FMOD_Main()
     const char* wordSplit = word.c_str();
     do
     {
-
-        Common_Update();
-
+        std::system("clear");
+        std::cout << std::endl;
         std::cout << "Inserte una palabra en mayusculas: " << std::endl;
+        std::cout << "Palabra anterior:" << word << std::endl;
         std::cin >> word ;
 
-        std::cout << word << std::endl;
-
-        // Separarla y hacer sonar la palabra 
 
         wordLength = word.length();
-        std::cout << "TAMANYO DE LA PALABRA "<< wordLength << std::endl;
         wordSplit = word.c_str();
+
+        bool* paused = NULL;
 
         for (int i = 0; i < wordLength; i++)
         {
-            int letra = wordSplit[0];
+            int letra = wordSplit[i];
             abecedarioIndex = letra - 65;
+
+            if(abecedarioIndex < 0 || abecedarioIndex > 26)
+                break;
+
             programmerSoundContext.dialogueString = abecedario[abecedarioIndex];
 
-            ERRCHECK( system->update() );
+            
 
             ERRCHECK( eventInstance->start() );
+            ERRCHECK( system->update() );
+                
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+            ERRCHECK(eventInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE));
         }
         
         
