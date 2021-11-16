@@ -11,6 +11,8 @@ Studio::EventInstance::setCallback
 #include "fmod_studio.hpp"
 #include "fmod.hpp"
 #include "common.h"
+#include <iostream>
+#include <cstring>
 
 struct ProgrammerSoundContext
 {
@@ -42,12 +44,8 @@ int FMOD_Main()
     FMOD::Studio::Bank* stringsBank = NULL;
     ERRCHECK( system->loadBankFile(Common_MediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank) );
 
-    // Available banks
-    unsigned int bankIndex = 0;
-    static const char* const banks[] = { "Patrulla_Normal.bank", "Patrulla_Radio.bank"};
-
-    FMOD::Studio::Bank* localizedBank = NULL;
-    ERRCHECK( system->loadBankFile(Common_MediaPath(banks[bankIndex]), FMOD_STUDIO_LOAD_BANK_NORMAL, &localizedBank) );
+    FMOD::Studio::Bank* deletrearBank = NULL;
+    ERRCHECK( system->loadBankFile(Common_MediaPath("Deletrear.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &deletrearBank) );
 
     FMOD::Studio::EventDescription* eventDescription = NULL;
     ERRCHECK( system->getEvent("event:/Dialogue", &eventDescription) );
@@ -57,41 +55,22 @@ int FMOD_Main()
 
     // Dialogue keys available
     // These keys are shared amongst all audio tables
-    unsigned int dialogueIndex = 0;
-    static const char* const dialogue[] = {"Contact", "Coverme", "Holdtheperimeter", "ImMoving", "LetsGo", "WatchyouSector"};
-
+    unsigned int abecedarioIndex = 0;
+    static const char* const abecedario[] = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "Xray", "Yankee", "Zulu"};
 
 
     ProgrammerSoundContext programmerSoundContext;
     programmerSoundContext.system = system;
     programmerSoundContext.coreSystem = coreSystem;
-    programmerSoundContext.dialogueString = dialogue[dialogueIndex];
+    programmerSoundContext.dialogueString = abecedario[abecedarioIndex];
 
     ERRCHECK( eventInstance->setUserData(&programmerSoundContext) );
     ERRCHECK( eventInstance->setCallback(programmerSoundCallback, FMOD_STUDIO_EVENT_CALLBACK_CREATE_PROGRAMMER_SOUND | FMOD_STUDIO_EVENT_CALLBACK_DESTROY_PROGRAMMER_SOUND) );
 
+    std::string word = "";
     do
     {
         Common_Update();
-
-        if (Common_BtnPress(BTN_ACTION1))
-        {
-            ERRCHECK( localizedBank->unload() );
-
-            bankIndex = (bankIndex < 1) ? bankIndex + 1 : 0;
-            ERRCHECK( system->loadBankFile(Common_MediaPath(banks[bankIndex]), FMOD_STUDIO_LOAD_BANK_NORMAL, &localizedBank) );
-        }
-
-        if (Common_BtnPress(BTN_ACTION2))
-        {
-            dialogueIndex = (dialogueIndex < 5) ? dialogueIndex + 1 : 0;
-            programmerSoundContext.dialogueString = dialogue[dialogueIndex];
-        }
-
-        if (Common_BtnPress(BTN_MORE))
-        {
-            ERRCHECK( eventInstance->start() );
-        }
 
         ERRCHECK( system->update() );
 
@@ -99,6 +78,7 @@ int FMOD_Main()
         Common_Draw("Programmer Sound Example.");
         Common_Draw("Copyright (c) Firelight Technologies 2012-2021.");
         Common_Draw("==================================================");
+        /*
         Common_Draw("");
         Common_Draw("Press %s to change mode", Common_BtnStr(BTN_ACTION1));
         Common_Draw("Press %s to change dialogue", Common_BtnStr(BTN_ACTION2));
@@ -116,7 +96,14 @@ int FMOD_Main()
         Common_Draw("  %s LetsGo",              dialogueIndex == 4 ? ">" : " ");
         Common_Draw("  %s WatchyouSector",      dialogueIndex == 5 ? ">" : " ");
         Common_Draw("");
+        */
         Common_Draw("Press %s to quit", Common_BtnStr(BTN_QUIT));
+        Common_Draw("Insert an uppercase word :");
+        std::cin >> word ;
+
+        std::cout << word << std::endl;
+
+        // Separarla y hacer sonar la palabra 
 
         Common_Sleep(50);
     } while (!Common_BtnPress(BTN_QUIT));
