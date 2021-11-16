@@ -68,6 +68,9 @@ int FMOD_Main()
     ERRCHECK( eventInstance->setCallback(programmerSoundCallback, FMOD_STUDIO_EVENT_CALLBACK_CREATE_PROGRAMMER_SOUND | FMOD_STUDIO_EVENT_CALLBACK_DESTROY_PROGRAMMER_SOUND) );
 
     std::string word = "";
+
+    int wordLength = word.length();
+    const char* wordSplit = word.c_str();
     do
     {
 
@@ -80,11 +83,15 @@ int FMOD_Main()
 
         // Separarla y hacer sonar la palabra 
 
+        wordLength = word.length();
+        wordSplit = word.c_str();
+        int letra = wordSplit[0];
+
+        std::cout << wordSplit[0] << " " << letra << std::endl;
+
     } while (!Common_BtnPress(BTN_QUIT));
 
     ERRCHECK( system->release() );
-
-    Common_Close();
 
     return 0;
 }
