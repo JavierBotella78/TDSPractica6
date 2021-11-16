@@ -70,42 +70,16 @@ int FMOD_Main()
     std::string word = "";
     do
     {
-        Common_Update();
 
         ERRCHECK( system->update() );
 
-        Common_Draw("==================================================");
-        Common_Draw("Programmer Sound Example.");
-        Common_Draw("Copyright (c) Firelight Technologies 2012-2021.");
-        Common_Draw("==================================================");
-        /*
-        Common_Draw("");
-        Common_Draw("Press %s to change mode", Common_BtnStr(BTN_ACTION1));
-        Common_Draw("Press %s to change dialogue", Common_BtnStr(BTN_ACTION2));
-        Common_Draw("Press %s to play the event",  Common_BtnStr(BTN_MORE));
-        Common_Draw("");
-        Common_Draw("Mode:");
-        Common_Draw("  %s Normal",  bankIndex == 0 ? ">" : " ");
-        Common_Draw("  %s Radio",   bankIndex == 1 ? ">" : " ");
-        Common_Draw("");
-        Common_Draw("Dialogue:");
-        Common_Draw("  %s Contact",             dialogueIndex == 0 ? ">" : " ");
-        Common_Draw("  %s Coverme",             dialogueIndex == 1 ? ">" : " ");
-        Common_Draw("  %s Holdtheperimeter",    dialogueIndex == 2 ? ">" : " ");
-        Common_Draw("  %s ImMoving",            dialogueIndex == 3 ? ">" : " ");
-        Common_Draw("  %s LetsGo",              dialogueIndex == 4 ? ">" : " ");
-        Common_Draw("  %s WatchyouSector",      dialogueIndex == 5 ? ">" : " ");
-        Common_Draw("");
-        */
-        Common_Draw("Press %s to quit", Common_BtnStr(BTN_QUIT));
-        Common_Draw("Insert an uppercase word :");
+        std::cout << "Inserte una palabra en mayusculas: " << std::endl;
         std::cin >> word ;
 
         std::cout << word << std::endl;
 
         // Separarla y hacer sonar la palabra 
 
-        Common_Sleep(50);
     } while (!Common_BtnPress(BTN_QUIT));
 
     ERRCHECK( system->release() );
