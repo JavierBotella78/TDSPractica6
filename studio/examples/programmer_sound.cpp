@@ -38,7 +38,7 @@ int FMOD_Main()
 
     // Available banks
     unsigned int bankIndex = 0;
-    static const char* const banks[] = { "media/Master_Normal.bank", "media/Master_Radio.bank"};
+    static const char* const banks[] = { "Master_Normal.bank", "Master_Radio.bank"};
 
     FMOD::Studio::Bank* localizedBank = NULL;
     ERRCHECK( system->loadBankFile(Common_MediaPath(banks[bankIndex]), FMOD_STUDIO_LOAD_BANK_NORMAL, &localizedBank) );
