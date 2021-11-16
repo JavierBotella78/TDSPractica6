@@ -74,7 +74,7 @@ int FMOD_Main()
     do
     {
 
-        
+        Common_Update();
 
         std::cout << "Inserte una palabra en mayusculas: " << std::endl;
         std::cin >> word ;
@@ -84,6 +84,7 @@ int FMOD_Main()
         // Separarla y hacer sonar la palabra 
 
         wordLength = word.length();
+        std::cout << "TAMANYO DE LA PALABRA "<< wordLength << std::endl;
         wordSplit = word.c_str();
 
         for (int i = 0; i < wordLength; i++)
