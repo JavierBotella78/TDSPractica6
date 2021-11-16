@@ -74,7 +74,7 @@ int FMOD_Main()
     do
     {
 
-        ERRCHECK( system->update() );
+        
 
         std::cout << "Inserte una palabra en mayusculas: " << std::endl;
         std::cin >> word ;
@@ -85,9 +85,22 @@ int FMOD_Main()
 
         wordLength = word.length();
         wordSplit = word.c_str();
-        int letra = wordSplit[0];
 
-        std::cout << wordSplit[0] << " " << letra << std::endl;
+        for (int i = 0; i < wordLength; i++)
+        {
+            int letra = wordSplit[0];
+            abecedarioIndex = letra - 65;
+            programmerSoundContext.dialogueString = abecedario[abecedarioIndex];
+
+            ERRCHECK( system->update() );
+
+            ERRCHECK( eventInstance->start() );
+        }
+        
+        
+        
+
+        
 
     } while (!Common_BtnPress(BTN_QUIT));
 
