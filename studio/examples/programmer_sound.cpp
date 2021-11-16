@@ -36,24 +36,15 @@ int FMOD_Main()
 
     ERRCHECK( system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) );
 
-    FMOD::Studio::Bank* masterBank = NULL;
-    ERRCHECK( system->loadBankFile(Common_MediaPath("Master.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank) );
-
-    FMOD::Studio::Bank* stringsBank = NULL;
-    ERRCHECK( system->loadBankFile(Common_MediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank) );
-
-    FMOD::Studio::Bank* sfxBank = NULL;
-    ERRCHECK( system->loadBankFile(Common_MediaPath("SFX.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &sfxBank) );
-
     // Available banks
     unsigned int bankIndex = 0;
-    static const char* const banks[] = { "Dialogue_EN.bank", "Dialogue_JP.bank", "Dialogue_CN.bank" };
+    static const char* const banks[] = { "Master_Normal.bank", "Master_Radio.bank"};
 
     FMOD::Studio::Bank* localizedBank = NULL;
     ERRCHECK( system->loadBankFile(Common_MediaPath(banks[bankIndex]), FMOD_STUDIO_LOAD_BANK_NORMAL, &localizedBank) );
 
     FMOD::Studio::EventDescription* eventDescription = NULL;
-    ERRCHECK( system->getEvent("event:/Character/Dialogue", &eventDescription) );
+    ERRCHECK( system->getEvent("event:Dialogue", &eventDescription) );
 
     FMOD::Studio::EventInstance* eventInstance = NULL;
     ERRCHECK( eventDescription->createInstance(&eventInstance) );
@@ -61,7 +52,9 @@ int FMOD_Main()
     // Dialogue keys available
     // These keys are shared amongst all audio tables
     unsigned int dialogueIndex = 0;
-    static const char* const dialogue[] = {"welcome", "main menu", "goodbye"};
+    static const char* const dialogue[] = {"Contact", "Coverme", "Holdtheperimeter", "ImMoving", "LetsGo", "WatchyouSector"};
+
+
 
     ProgrammerSoundContext programmerSoundContext;
     programmerSoundContext.system = system;
@@ -79,13 +72,13 @@ int FMOD_Main()
         {
             ERRCHECK( localizedBank->unload() );
 
-            bankIndex = (bankIndex < 2) ? bankIndex + 1 : 0;
+            bankIndex = (bankIndex < 1) ? bankIndex + 1 : 0;
             ERRCHECK( system->loadBankFile(Common_MediaPath(banks[bankIndex]), FMOD_STUDIO_LOAD_BANK_NORMAL, &localizedBank) );
         }
 
         if (Common_BtnPress(BTN_ACTION2))
         {
-            dialogueIndex = (dialogueIndex < 2) ? dialogueIndex + 1 : 0;
+            dialogueIndex = (dialogueIndex < 5) ? dialogueIndex + 1 : 0;
             programmerSoundContext.dialogueString = dialogue[dialogueIndex];
         }
 
@@ -101,19 +94,21 @@ int FMOD_Main()
         Common_Draw("Copyright (c) Firelight Technologies 2012-2021.");
         Common_Draw("==================================================");
         Common_Draw("");
-        Common_Draw("Press %s to change language", Common_BtnStr(BTN_ACTION1));
+        Common_Draw("Press %s to change mode", Common_BtnStr(BTN_ACTION1));
         Common_Draw("Press %s to change dialogue", Common_BtnStr(BTN_ACTION2));
         Common_Draw("Press %s to play the event",  Common_BtnStr(BTN_MORE));
         Common_Draw("");
-        Common_Draw("Language:");
-        Common_Draw("  %s English",  bankIndex == 0 ? ">" : " ");
-        Common_Draw("  %s Japanese", bankIndex == 1 ? ">" : " ");
-        Common_Draw("  %s Chinese",  bankIndex == 2 ? ">" : " ");
+        Common_Draw("Mode:");
+        Common_Draw("  %s Normal",  bankIndex == 0 ? ">" : " ");
+        Common_Draw("  %s Radio",   bankIndex == 1 ? ">" : " ");
         Common_Draw("");
         Common_Draw("Dialogue:");
-        Common_Draw("  %s Welcome to the FMOD Studio tutorial", dialogueIndex == 0 ? ">" : " ");
-        Common_Draw("  %s This is the main menu",               dialogueIndex == 1 ? ">" : " ");
-        Common_Draw("  %s Goodbye",                             dialogueIndex == 2 ? ">" : " ");
+        Common_Draw("  %s Contact",             dialogueIndex == 0 ? ">" : " ");
+        Common_Draw("  %s Coverme",             dialogueIndex == 1 ? ">" : " ");
+        Common_Draw("  %s Holdtheperimeter",    dialogueIndex == 2 ? ">" : " ");
+        Common_Draw("  %s ImMoving",            dialogueIndex == 3 ? ">" : " ");
+        Common_Draw("  %s LetsGo",              dialogueIndex == 4 ? ">" : " ");
+        Common_Draw("  %s WatchyouSector",      dialogueIndex == 5 ? ">" : " ");
         Common_Draw("");
         Common_Draw("Press %s to quit", Common_BtnStr(BTN_QUIT));
 
