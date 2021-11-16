@@ -44,7 +44,7 @@ int FMOD_Main()
     ERRCHECK( system->loadBankFile(Common_MediaPath(banks[bankIndex]), FMOD_STUDIO_LOAD_BANK_NORMAL, &localizedBank) );
 
     FMOD::Studio::EventDescription* eventDescription = NULL;
-    ERRCHECK( system->getEvent("event:Dialogue", &eventDescription) );
+    ERRCHECK( system->getEvent("event:/Dialogue", &eventDescription) );
 
     FMOD::Studio::EventInstance* eventInstance = NULL;
     ERRCHECK( eventDescription->createInstance(&eventInstance) );
