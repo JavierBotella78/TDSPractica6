@@ -36,9 +36,15 @@ int FMOD_Main()
 
     ERRCHECK( system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) );
 
+    FMOD::Studio::Bank* masterBank = NULL;
+    ERRCHECK( system->loadBankFile(Common_MediaPath("Master.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank) );
+
+    FMOD::Studio::Bank* stringsBank = NULL;
+    ERRCHECK( system->loadBankFile(Common_MediaPath("Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank) );
+
     // Available banks
     unsigned int bankIndex = 0;
-    static const char* const banks[] = { "Master_Normal.bank", "Master_Radio.bank"};
+    static const char* const banks[] = { "Patrulla_Normal.bank", "Patrulla_Radio.bank"};
 
     FMOD::Studio::Bank* localizedBank = NULL;
     ERRCHECK( system->loadBankFile(Common_MediaPath(banks[bankIndex]), FMOD_STUDIO_LOAD_BANK_NORMAL, &localizedBank) );
